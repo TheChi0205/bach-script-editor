@@ -1,33 +1,7 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
-import subprocess
-import string
-import os
-letters = string.ascii_lowercase
+from os import system
 
-def convert_string(x):
-  new_string = ""
-  for z in x:
-    try:
-      letters.index(z)
-    except ValueError:
-      new_string += z
-    else:
-      index_of_letter = letters.index(z)
-      new_string += letters[index_of_letter + 1]
-  return(new_string)
-
-def reset_string(x):
-  new_string = ""
-  for z in x:
-    try:
-      letters.index(z)
-    except ValueError:
-      new_string += z
-    else:
-      index_of_letter = letters.index(z)
-      new_string+= letters[index_of_letter - 1]
-  return new_string
 
 def open_file():
     """Open a file for editing."""
@@ -40,7 +14,7 @@ def open_file():
     txt_edit.delete(1.0, tk.END)
     with open(filepath, "r") as input_file:
         text = input_file.read()
-        txt_edit.insert(tk.END, reset_string(text))
+        txt_edit.insert(tk.END, text)
 
 def save_file():
     """Save the current file as a new file."""
@@ -53,7 +27,7 @@ def save_file():
         return
     with open(filepath, "w") as output_file:
         text = txt_edit.get(1.0, tk.END)
-        output_file.write(convert_string(text))
+        output_file.write(text)
 
 def convert_file():
 
@@ -72,13 +46,13 @@ def convert_file():
 def quicksave():
     with open('files/quicksave.thechi', "w") as output_file:
         text = txt_edit.get(1.0, tk.END)
-        output_file.write(convert_string(text))
+        output_file.write(text)
 
 def quickload():
     txt_edit.delete(1.0, tk.END)
     with open('files/quicksave.thechi', "r") as input_file:
         text = input_file.read()
-        txt_edit.insert(tk.END, reset_string(text))
+        txt_edit.insert(tk.END, text)
 
 def run():
     with open("quick.bat", "w") as output_file:
@@ -87,8 +61,9 @@ def run():
     os.system('start cmd /K quick.bat')
 
 
+
 window = tk.Tk()
-window.title(".bat editor")
+window.title("BAT")
 window.rowconfigure(0, minsize=800, weight=1)
 window.columnconfigure(1, minsize=800, weight=1)
 
